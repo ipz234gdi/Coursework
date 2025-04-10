@@ -1,0 +1,46 @@
+# Системні файли IDE/редакторів
+.idea/
+.vscode/
+*.sublime*
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# PHP
+vendor/            
+*.log
+*.lock
+
+# Конфігурації (секрети та локальні з'єднання)
+.env
+config/database.php
+
+# Створені або завантажені файли
+storage/uploads/
+logs/
+
+# Кеші та тимчасові файли
+*.cache
+*.tmp
+*.bak
+
+# Composer
+composer.lock
+
+# Бази даних (якщо є локальні .sql файли)
+*.sql
+*.sqlite
+*.db
+
+# Node (якщо є фронтенд, наприклад Vue/React)
+node_modules/
+dist/
+build/
+npm-debug.log
+yarn.lock
+
+# coverage, тестування
+coverage/
+phpunit.xml
+.phpunit.result.cache

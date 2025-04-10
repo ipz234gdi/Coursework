@@ -1,0 +1,33 @@
+:root {
+  --bg-color: #f6f8fa;
+  --header-bg: #24292e;
+  --sidebar-bg: #ffffff;
+  --main-bg: #ffffff;
+  --border-color: #e1e4e8;
+  --accent-color: #0366d6;
+  --text-color: #24292e;
+  --secondary-text: #586069;
+  --success-color: #2cbe4e;
+  --warning-color: #f9c513;
+  --error-color: #cb2431;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-grow: 1;
+}

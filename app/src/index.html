@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForumHub - Соціальна платформа для співпраці</title>
+    <style>
+        /* GitHub-inspired Clean Interface */
+        
+
+
+
+        
+
+        /* Header - GitHub inspired */
+        
+
+        /* Main Container */
+        .container {
+            display: flex;
+            flex-grow: 1;
+        }
+
+        /* Sidebar - Reddit-like categories/communities */
+        .sidebar {
+            width: 250px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 1rem;
+            height: calc(100vh - 58px);
+            overflow-y: auto;
+            position: sticky;
+            top: 58px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-section h3 {
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .community-list {
+            list-style: none;
+        }
+
+        .community-item {
+            padding: 0.5rem 0.75rem;
+            margin-bottom: 0.25rem;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .community-item:hover {
+            background-color: var(--bg-color);
+        }
+
+        .community-item.active {
+            background-color: rgba(3, 102, 214, 0.1);
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .community-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        /* Main Content - Reddit style posts */
+        .main-content {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .content-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .content-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0255aa;
+        }
+
+        .post-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .post-card {
+            background-color: var(--main-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+        }
+
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .post-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .post-content {
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--secondary-text);
+            cursor: pointer;
+        }
+
+        .post-action:hover {
+            color: var(--accent-color);
+        }
+
+        .post-votes {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Discord-like Chat/Voice Section */
+        .chat-container {
+            width: 300px;
+            background-color: var(--sidebar-bg);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 58px);
+            position: sticky;
+            top: 58px;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .voice-channels {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .voice-channel {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .voice-channel:hover {
+            background-color: var(--bg-color);
+        }
+
+        .voice-channel-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .voice-icon {
+            color: var(--success-color);
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #ddd;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            flex-grow: 1;
+        }
+
+        .message-author {
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+        }
+
+        .message-text {
+            line-height: 1.4;
+        }
+
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .chat-input-field {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            resize: none;
+        }
+
+        /* Active Voice Call UI */
+        .active-call {
+            background-color: rgba(44, 190, 78, 0.1);
+            border: 1px solid var(--success-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .call-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .call-title {
+            font-weight: 600;
+            color: var(--success-color);
+        }
+
+        .call-duration {
+            color: var(--secondary-text);
+        }
+
+        .call-participants {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .participant {
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .participant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-bottom: 0.3rem;
+            position: relative;
+        }
+
+        .speaking {
+            border: 2px solid var(--success-color);
+        }
+
+        .call-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .call-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-color: #eee;
+        }
+
+        .screen-share {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .end-call {
+            background-color: var(--error-color);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .chat-container {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .search-bar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- GitHub-inspired Header -->
+    <header>
+        <div class="logo">ForumHub</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Пошук...">
+        </div>
+        <div class="header-actions">
+            <button>Створити</button>
+            <button>Повідомлення</button>
+            <div class="user-profile">
+                <div class="user-avatar">К</div>
+                <span>Користувач</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Reddit-like Sidebar with Communities -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Мої спільноти</h3>
+                <ul class="community-list">
+                    <li class="community-item active">
+                        <div class="community-icon">П</div>
+                        <span>Програмування</span>
+                    </li>
+                    <li class="community-item">
+                        <div class="community-icon">В</div>
+                        <span>Веб-розробка</span>
+                    </li>
+                    <li class="community-item">
+                        <div class="community-icon">Д</div>
+                        <span>Дизайн</span>
+                    </li>
+                    <li class="community-item">
+                        <div class="community-icon">P</div>
+                        <span>PHP</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Популярні спільноти</h3>
+                <ul class="community-list">
+                    <li class="community-item">
+                        <div class="community-icon">Т</div>
+                        <span>Технології</span>
+                    </li>
+                    <li class="community-item">
+                        <div class="community-icon">Н</div>
+                        <span>Новини</span>
+                    </li>
+                    <li class="community-item">
+                        <div class="community-icon">І</div>
+                        <span>Ігри</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Категорії</h3>
+                <ul class="community-list">
+                    <li class="community-item">
+                        <span>Наука</span>
+                    </li>
+                    <li class="community-item">
+                        <span>Мистецтво</span>
+                    </li>
+                    <li class="community-item">
+                        <span>Спорт</span>
+                    </li>
+                    <li class="community-item">
+                        <span>Бізнес</span>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Reddit-inspired Main Content -->
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">Програмування</h1>
+                <div class="content-actions">
+                    <button class="btn">Сортувати</button>
+                    <button class="btn btn-primary">Створити пост</button>
+                </div>
+            </div>
+
+            <div class="post-list">
+                <!-- Discord-like Voice Call UI -->
+                <div class="active-call">
+                    <div class="call-header">
+                        <div class="call-title">Активний голосовий виклик</div>
+                        <div class="call-duration">32:15</div>
+                    </div>
+                    <div class="call-participants">
+                        <div class="participant">
+                            <div class="participant-avatar speaking"></div>
+                            <div>Користувач1</div>
+                        </div>
+                        <div class="participant">
+                            <div class="participant-avatar"></div>
+                            <div>Користувач2</div>
+                        </div>
+                        <div class="participant">
+                            <div class="participant-avatar"></div>
+                            <div>Ви</div>
+                        </div>
+                    </div>
+                    <div class="call-actions">
+                        <div class="call-btn">🎤</div>
+                        <div class="call-btn">🎥</div>
+                        <div class="call-btn screen-share">🖵</div>
+                        <div class="call-btn end-call">✕</div>
+                    </div>
+                </div>
+
+                <!-- Reddit-like Posts -->
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="user-avatar">А</div>
+                            <span>Автор123 · 2 години тому</span>
+                        </div>
+                    </div>
+                    <h2 class="post-title">Як оптимізувати SQL запити для великих баз даних?</h2>
+                    <div class="post-content">
+                        Привіт усім! Я працюю з базою даних, що містить близько 5 мільйонів записів, і мої запити почали виконуватися дуже повільно. Які існують основні підходи до оптимізації SQL запитів для таких великих наборів даних? Особливо цікавлять методи індексації та кешування.
+                    </div>
+                    <div class="post-actions">
+                        <div class="post-votes">
+                            <span>⬆️</span>
+                            <span>42</span>
+                            <span>⬇️</span>
+                        </div>
+                        <div class="post-action">
+                            <span>💬</span>
+                            <span>18 коментарів</span>
+                        </div>
+                        <div class="post-action">
+                            <span>↗️</span>
+                            <span>Поділитися</span>
+                        </div>
+                        <div class="post-action">
+                            <span>🔖</span>
+                            <span>Зберегти</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="user-avatar">Р</div>
+                            <span>Розробник · 5 годин тому</span>
+                        </div>
+                    </div>
+                    <h2 class="post-title">Нові можливості PHP 8.2 - на що варто звернути увагу</h2>
+                    <div class="post-content">
+                        У новій версії PHP було додано декілька цікавих функцій, які можуть суттєво поліпшити ваш код. Я підготував короткий огляд найважливіших змін, включаючи readonly класи, константи в traits та нові функції для роботи з типами даних.
+                    </div>
+                    <div class="post-actions">
+                        <div class="post-votes">
+                            <span>⬆️</span>
+                            <span>87</span>
+                            <span>⬇️</span>
+                        </div>
+                        <div class="post-action">
+                            <span>💬</span>
+                            <span>32 коментарі</span>
+                        </div>
+                        <div class="post-action">
+                            <span>↗️</span>
+                            <span>Поділитися</span>
+                        </div>
+                        <div class="post-action">
+                            <span>🔖</span>
+                            <span>Зберегти</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="user-avatar">П</div>
+                            <span>Програміст_007 · Вчора</span>
+                        </div>
+                    </div>
+                    <h2 class="post-title">Досвід міграції з MySQL на PostgreSQL у великому проекті</h2>
+                    <div class="post-content">
+                        Хочу поділитися досвідом міграції нашого проекту з MySQL на PostgreSQL. Ми зіткнулися з багатьма викликами, але результат вартував зусиль. Особливо покращилась продуктивність складних запитів та аналітики. Детально описую процес, основні проблеми та їх вирішення.
+                    </div>
+                    <div class="post-actions">
+                        <div class="post-votes">
+                            <span>⬆️</span>
+                            <span>124</span>
+                            <span>⬇️</span>
+                        </div>
+                        <div class="post-action">
+                            <span>💬</span>
+                            <span>56 коментарів</span>
+                        </div>
+                        <div class="post-action">
+                            <span>↗️</span>
+                            <span>Поділитися</span>
+                        </div>
+                        <div class="post-action">
+                            <span>🔖</span>
+                            <span>Зберегти</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Discord-inspired Chat/Voice Section -->
+        <div class="chat-container">
+            <div class="chat-header">
+                <div>Чати та голосові канали</div>
+                <div>+</div>
+            </div>
+            
+            <div class="voice-channels">
+                <h3>Голосові канали</h3>
+                <div class="voice-channel">
+                    <div class="voice-channel-info">
+                        <span class="voice-icon">🔊</span>
+                        <span>Загальний</span>
+                    </div>
+                    <span>3</span>
+                </div>
+                <div class="voice-channel">
+                    <div class="voice-channel-info">
+                        <span class="voice-icon">🔊</span>
+                        <span>Технічні питання</span>
+                    </div>
+                    <span>2</span>
+                </div>
+                <div class="voice-channel">
+                    <div class="voice-channel-info">
+                        <span class="voice-icon">🔊</span>
+                        <span>Вебінар PHP</span>
+                    </div>
+                    <span>7</span>
+                </div>
+            </div>
+            
+            <div class="chat-messages">
+                <div class="message">
+                    <div class="message-avatar"></div>
+                    <div class="message-content">
+                        <div class="message-author">Розробник</div>
+                        <div class="message-text">Всім привіт! Хто зараз працює над PHP проектами?</div>
+                    </div>
+                </div>
+                <div class="message">
+                    <div class="message-avatar"></div>
+                    <div class="message-content">
+                        <div class="message-author">Програміст_007</div>
+                        <div class="message-text">Я якраз закінчую API на Laravel. Можемо обговорити деякі питання щодо оптимізації.</div>
+                    </div>
+                </div>
+                <div class="message">
+                    <div class="message-avatar"></div>
+                    <div class="message-content">
+                        <div class="message-author">Користувач</div>
+                        <div class="message-text">Приєднуйтесь до голосового каналу "Технічні питання", там зараз обговорюють саме це.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <textarea class="chat-input-field" placeholder="Написати повідомлення..."></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
