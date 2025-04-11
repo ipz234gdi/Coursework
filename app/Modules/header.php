@@ -1,0 +1,31 @@
+<?php
+
+$username = $_SESSION['user']['username'] ?? null;
+
+?>
+<header>
+    <div class="logo">Pingora</div>
+    <div class="search-bar">
+        <input type="text" placeholder="Пошук...">
+    </div>
+    <div class="header-actions">
+        <button>Створити</button>
+        <button>Повідомлення</button>
+        <?php
+
+        if ($username === null) {
+            echo '
+                <a href="/login" class="user-btn">Логін</a>
+            ';
+        } else {
+            echo '
+            <div class="user-profile">
+                <div class="user-avatar">' . strtoupper(mb_substr($username, 0, 1)) . '</div>
+                <a href="/profile" class="user-btn">' . htmlspecialchars($username) . '</a>
+            </div>
+            ';
+        }
+        ?>
+
+    </div>
+</header>
