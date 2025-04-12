@@ -9,7 +9,7 @@ $username = $_SESSION['user']['username'] ?? null;
         <input type="text" placeholder="Пошук...">
     </div>
     <div class="header-actions">
-        <button>Створити</button>
+        <a href="/posts/create" class="btn">Створити</a>
         <button>Повідомлення</button>
         <?php
 

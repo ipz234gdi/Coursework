@@ -1,4 +1,7 @@
 <?php
+
+require_once __DIR__ . '/../../config/database.php';
+
 class AuthController
 {
     public function showRegister()
@@ -37,9 +40,7 @@ class AuthController
         }
 
         try {
-            $pdo = new PDO("mysql:host=localhost;dbname=pingora;charset=utf8", "root", "", [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]);
+            $pdo = db();
 
             // Перевірка, чи такий email вже є
             $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
@@ -84,9 +85,7 @@ class AuthController
         }
 
         try {
-            $pdo = new PDO("mysql:host=localhost;dbname=pingora;charset=utf8", "root", "", [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]);
+            $pdo = db();
 
             $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
             $stmt->execute([$email]);

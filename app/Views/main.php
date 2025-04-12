@@ -17,6 +17,7 @@
         <?= $ListPost ?? '' ?>
         <?= $Register ?? '' ?>
         <?= $Login ?? '' ?>
+        <?= $CreatePost ?? '' ?>
     </div>
 </body>
 
