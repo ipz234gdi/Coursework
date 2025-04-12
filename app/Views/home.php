@@ -2,6 +2,7 @@
 $title = 'Головна - Pingora';
 
 ob_start();
+require __DIR__ . '/../Modules/aside.php';
 
 require __DIR__ . '/../Modules/main.php';
 

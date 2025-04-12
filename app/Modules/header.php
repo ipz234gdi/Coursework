@@ -4,6 +4,7 @@ $username = $_SESSION['user']['username'] ?? null;
 
 ?>
 <header>
+    <button id="toggleSidebarBtnMin" class="toggle-btn-min">☰</button>
     <div class="logo">Pingora</div>
     <div class="search-bar">
         <input type="text" placeholder="Пошук...">

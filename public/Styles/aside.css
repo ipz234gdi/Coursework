@@ -1,0 +1,119 @@
+
+.toggle-btn {
+    position: fixed;
+    top: 80px;
+    z-index: 1000;
+    width: 32px;
+    aspect-ratio: 1 / 1;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: left 0.3s ease;
+    left: calc(var(--sidebar-visible) - 16px);
+}
+
+.toggle-btn-min {
+    display: none;
+    position: fixed;
+    top: 12.8px;
+    left: 12.8px;
+    z-index: 1000;
+    width: 32px;
+    aspect-ratio: 1 / 1;
+    background: #2195f300;
+    color: white;
+    font-size: 24px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.toggle-btn-min:hover {
+    background: #00000048;
+}
+
+@media screen and (max-width: 1200px) {
+    .toggle-btn {
+        display: none;
+    }
+    .toggle-btn-min {
+        display: block;
+    }
+  }
+
+.sidebar {
+    padding: 10px;
+    width: var(--sidebar-width);
+    background-color: var(--sidebar-bg, #f0f0f0);
+    transition: opacity 0.3s ease;
+    overflow-y: auto;
+    height: calc(100vh - 58px);
+    border-right: 1px solid var(--border-color, #ccc);
+    transition: transform 0.3s ease;
+}
+
+.sidebar.hidden {
+    transform: translateX(-240px);
+}
+
+@media screen and (max-width: 1200px) {
+    .sidebar {
+        /* display: none; */
+        position: fixed;
+        top: 58px;
+        left: 0;
+    }
+    .sidebar.hidden {
+        transform: translateX(-271px);
+    }
+  }
+
+.sidebar-section {
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-section h3 {
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.community-list {
+    list-style: none;
+}
+
+.community-item {
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.25rem;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.community-item:hover {
+    background-color: var(--bg-color);
+}
+
+.community-item.active {
+    background-color: rgba(3, 102, 214, 0.1);
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.community-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+}

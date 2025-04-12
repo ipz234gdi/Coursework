@@ -10,7 +10,17 @@
   --success-color: #2cbe4e;
   --warning-color: #f9c513;
   --error-color: #cb2431;
+
+  --header-height: 58px;
+  --sidebar-width: 271px;
+  --sidebar-hidden-width: 30px;
+  --sidebar-hidden-width-min: 0px;
+  --sidebar-visible: var(--sidebar-width);
 }
+
+/* html {
+  --sidebar-visible: var(--sidebar-width);
+} */
 
 * {
   margin: 0;
@@ -28,8 +38,15 @@ body {
 }
 
 .container {
-  display: flex;
-  flex-grow: 1;
+  display: grid;
+  grid-template-columns: var(--sidebar-visible) 1fr;
+  transition: grid-template-columns 0.3s ease;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
 }
 
 .btn {

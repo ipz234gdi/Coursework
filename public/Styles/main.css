@@ -1,7 +1,10 @@
 .main-content {
-    flex-grow: 1;
+    width: 100%;
     padding: 1.5rem;
     overflow-y: auto;
+    max-width: 732px;
+    margin: 0 auto;
+    transition: all 0.3s ease;
 }
 
 .content-header {

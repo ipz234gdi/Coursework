@@ -1,8 +1,9 @@
 <?php
 $styles = [
     '/Styles/style.css',
-    '/Styles/sty_main.css',
-    '/Styles/header.css'
+    '/Styles/main.css',
+    '/Styles/header.css',
+    '/Styles/aside.css'
 ];
 ?>
 
