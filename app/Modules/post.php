@@ -1,18 +1,3 @@
-<?php
-require_once __DIR__ . '/../../config/database.php';
-
-$pdo = db();
-
-$stmt = $pdo->query("
-    SELECT posts.*, users.username 
-    FROM posts
-    JOIN users ON posts.user_id = users.id
-    ORDER BY posts.created_at DESC
-");
-
-$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
-
 <?php foreach ($posts as $post): ?>
     <div class="post-card">
         <div class="post-header">

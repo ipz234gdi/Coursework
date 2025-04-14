@@ -108,4 +108,13 @@ class AuthController
             echo "Помилка БД: " . $e->getMessage();
         }
     }
+
+    public function loguot()
+    {
+        session_unset(); // очищає всі $_SESSION-змінні
+        session_destroy(); // знищує саму сесію
+
+        header("Location: /home"); // редірект на сторінку входу
+        exit;
+    }
 }

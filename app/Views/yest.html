@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Індустріальний Дизайн</title>
+  <style>
+    /* Базовий скидання стилів */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Helvetica', sans-serif;
+      background-color: #000;
+      color: #fff;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* Контейнер для основного вмісту */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      font-size: 3em;
+      color: #A6FF00;
+    }
+    /* Основний блок з контентом */
+    .content {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border: 1px solid #333;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Декоративні елементи по боках контентного блоку */
+    .content::before,
+    .content::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 20px;
+      opacity: 0.7;
+    }
+    .content::before {
+      left: -20px;
+      background: repeating-linear-gradient(45deg, rgba(166,255,0,0.5), rgba(166,255,0,0.5) 5px, transparent 5px, transparent 10px);
+    }
+    .content::after {
+      right: -20px;
+      background: repeating-linear-gradient(-45deg, rgba(166,255,0,0.5), rgba(166,255,0,0.5) 5px, transparent 5px, transparent 10px);
+    }
+    p {
+      margin: 15px 0;
+    }
+    /* Кнопка */
+    .btn {
+      display: inline-block;
+      background: linear-gradient(145deg, #000, #333);
+      border: none;
+      color: #A6FF00;
+      padding: 10px 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.2s;
+      text-decoration: none;
+      margin-top: 20px;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+    }
+    /* Декоративні бокові елементи */
+    .side-decor {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 50px;
+      background: repeating-linear-gradient(
+        to bottom,
+        #A6FF00 0,
+        #A6FF00 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      opacity: 0.2;
+      z-index: 0;
+    }
+    .side-decor.left {
+      left: 0;
+    }
+    .side-decor.right {
+      right: 0;
+    }
+    /* Стилізація підвалу */
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.8em;
+      border-top: 1px solid #333;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Декоративні бокові елементи -->
+  <div class="side-decor left"></div>
+  <div class="side-decor right"></div>
+
+  <div class="container">
+    <header>
+      <h1>Індустріальний Дизайн</h1>
+    </header>
+    <div class="content">
+      <p>Ласкаво просимо на наш сайт, де сучасність зустрічається з індустріальністю. Ми використовуємо металеві та пластмасові мотиви, доповнюючи їх елементами штрих-кодів і текстурованими деталями.</p>
+      <p>Стриманий дизайн з мінімалістичною палітрою дозволяє виділити важливі елементи, а градієнти та невеликі анімації створюють відчуття глибини та інноваційності.</p>
+      <a href="#" class="btn">Дізнатися більше</a>
+    </div>
+    <footer>
+      &copy; 2025 Індустріальний Дизайн
+    </footer>
+  </div>
+</body>
+</html>

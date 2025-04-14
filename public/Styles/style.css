@@ -1,15 +1,20 @@
 :root {
-  --bg-color: #f6f8fa;
-  --header-bg: #24292e;
-  --sidebar-bg: #ffffff;
-  --main-bg: #ffffff;
+  --bg-color: #F2F3F4;
+  --header-bg: #1A1A1A;
+  --sidebar-bg: #F2F3F4;
+  --main-bg: #F2F3F4;
   --border-color: #e1e4e8;
-  --accent-color: #0366d6;
-  --text-color: #24292e;
-  --secondary-text: #586069;
-  --success-color: #2cbe4e;
-  --warning-color: #f9c513;
-  --error-color: #cb2431;
+  --accent-color: #A6FF00;
+  --unaccent-color: #9d9d9d44;
+
+  --text-color-black: #1A1A1A;
+  --text-color-white: #F2F3F4;
+
+  --secondary-text: #7D8A91;
+
+  --success-color: #3C85F3;
+  --warning-color: #FFD53D;
+  --error-color: #FF4F58;
 
   --header-height: 58px;
   --sidebar-width: 271px;
@@ -18,48 +23,196 @@
   --sidebar-visible: var(--sidebar-width);
 }
 
-/* html {
-  --sidebar-visible: var(--sidebar-width);
-} */
+
+@font-face {
+  font-family: 'MyFont';
+  src: url('/Fonts/pt-root-ui_medium.woff2') format('woff2');
+  /* src: url('/Fonts/pt-root-ui_medium.otf') format('truetype'); */
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+#canvas {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+canvas {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'MyFont', sans-serif;
 }
 
 body {
   background-color: var(--bg-color);
+  /* background-color: #0a2e38; */
+  /* background: #000000; */
   color: var(--text-color);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  scrollbar-gutter: stable;
 }
 
 .container {
   display: grid;
   grid-template-columns: var(--sidebar-visible) 1fr;
+  grid-template-areas:
+    "sidebar-wrapper main";
   transition: grid-template-columns 0.3s ease;
 }
 
 @media screen and (max-width: 1200px) {
   .container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 0px 1fr;
+    
   }
 }
 
-.btn {
-  text-decoration: none;
-  background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+button {
+  border: none;
 }
 
-.btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+a {
+  text-decoration: none;
+  color: var(--text-color-white);
+}
+
+li {
+  list-style: none;
+}
+
+a,
+button,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent; /* iOS & Android */
+  -webkit-touch-callout: none;              /* Відключити long-press меню */
+  outline: none;                            /* При фокусі */
+}
+
+.bg-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background-color: transparent;
+  color: white;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn.active > p {
+  cursor: default;
+  animation: fadeInZoom 0.4s forwards;
+  
+}
+
+a.btn.active {
+  pointer-events: none;
+  cursor: default;
+}
+
+.btn > p {
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-weight: 500;
+}
+
+.btn:hover > p {
+  color: var(--accent-color);
+
+}
+
+.corner-box {
+  position: relative;
+}
+
+.corner-box .corner {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: rgb(255, 255, 255);
+  animation: fadeInZoom 0.4s ease-out forwards;
+}
+
+/* Кути */
+.corner.tl { top: 0px; left: 0px; animation: fadeInZoom-tl 0.4s forwards;}
+.corner.tr { top: 0px; right: 0px; animation: fadeInZoom-tr 0.4s forwards;}
+.corner.bl { bottom: 0px; left: 0px; animation: fadeInZoom-bl 0.4s forwards;}
+.corner.br { bottom: 0px; right: 0px; animation: fadeInZoom-br 0.4s forwards;}
+
+@keyframes fadeInZoom {
+  0% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInZoom-tl {
+  0% {
+    top: 3px; 
+    left: 3px;
+  }
+  100% {
+    top: 0px; 
+    left: 0px;
+  }
+}
+@keyframes fadeInZoom-tr {
+  0% {
+    top: 3px; 
+    right: 3px;
+  }
+  100% {
+    top: 0px; 
+    right: 0px;
+  }
+}
+@keyframes fadeInZoom-bl {
+  0% {
+    bottom: 3px; 
+    left: 3px;
+  }
+  100% {
+    bottom: 0px; 
+    left: 0px;
+  }
+}
+@keyframes fadeInZoom-br {
+  0% {
+    bottom: 3px; 
+    right: 3px;
+  }
+  100% {
+    bottom: 0px; 
+    right: 0px;
+  }
 }
