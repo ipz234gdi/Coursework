@@ -10,7 +10,7 @@
     <div class="post-list">
 
         <!-- Reddit-like Posts -->
-        <?php require_once __DIR__ . '/post.php'; ?>
+        <?php require_once __DIR__ . '/../posts/post.php'; ?>
 
     </div>
 </main>

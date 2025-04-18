@@ -11,7 +11,7 @@ $username = $_SESSION['user']['username'] ?? null;
     </div>
     <div class="header-actions">
         <a href="/posts/create" class="btn">
-            <p>Створити</p>
+            <p>>CREATE-POST()</p>
         </a>
         <?php
 
@@ -31,12 +31,13 @@ $username = $_SESSION['user']['username'] ?? null;
 
     </div>
     <div class="header-module">
+        <div class="header-module-in"></div>
         <ul>
             <li>
-                <a href="/profile">профіль</a>
+                <a href="/profile" class="btn"><p>- profile ></p></a>
             </li>
             <li>
-                <a href="/logout">вийти</a>
+                <a href="/logout" class="btn"><p>- loguot ></p></a>
             </li>
         </ul>
     </div>

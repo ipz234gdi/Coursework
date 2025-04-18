@@ -45,7 +45,7 @@ class ChannelController
         exit;
     }
 
-    public function listUserCommunities() {
+    public function listUserCommunities(): array {
         $communities = [];
         $activeCommunityId = $_GET['active'] ?? null;
     
@@ -55,8 +55,8 @@ class ChannelController
             $communities = $this->getUserCommunities($pdo, $userId);
         }
         echo "<script>console.log('Get all channals to user');</script>";
-        // Вивід шаблону aside.php (він отримає $communities)
-        require __DIR__ . '/../Modules/aside.php';
+        // require __DIR__ . '/../Views/layouts/aside.php';
+        return $communities;
     }
 
     function getUserCommunities(PDO $pdo, int $userId): array {

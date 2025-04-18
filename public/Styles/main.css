@@ -1,4 +1,5 @@
 .main-content {
+    font-family: 'pt-root';
     width: 100%;
     padding: 1.5rem;
     overflow-y: auto;
@@ -28,8 +29,7 @@
 .main-content .btn {
     padding: 0.5rem 1rem;
     border-radius: 6px;
-    border: 1px solid var(--border-color);
-    /* background-color: white; */
+    border: var(--border-weight) solid var(--border-color);
     cursor: pointer;
     font-size: 0.9rem;
     display: flex;
@@ -55,7 +55,7 @@
 
 .post-card {
     background-color: var(--main-bg);
-    border: 1px solid var(--border-color);
+    border: var(--border-weight) solid var(--border-color);
     border-radius: 6px;
     padding: 1rem;
 }

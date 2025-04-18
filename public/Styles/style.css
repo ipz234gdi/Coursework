@@ -1,20 +1,11 @@
 :root {
-  --bg-color: #F2F3F4;
-  --header-bg: #1A1A1A;
-  --sidebar-bg: #F2F3F4;
-  --main-bg: #F2F3F4;
-  --border-color: #e1e4e8;
-  --accent-color: #A6FF00;
-  --unaccent-color: #9d9d9d44;
-
-  --text-color-black: #1A1A1A;
-  --text-color-white: #F2F3F4;
+  --border-weight: 0.1rem;
 
   --secondary-text: #7D8A91;
 
   --success-color: #3C85F3;
   --warning-color: #FFD53D;
-  --error-color: #FF4F58;
+  --error-color: #ff32a8;
 
   --header-height: 58px;
   --sidebar-width: 271px;
@@ -23,11 +14,68 @@
   --sidebar-visible: var(--sidebar-width);
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-color: #F2F3F4;
+    --header-bg: #F2F3F4;
+    --sidebar-bg: #F2F3F4;
+    --main-bg: #F2F3F4;
+    /* --accent-color: #A6FF00; */
+    --accent-color: #c0fe04;
+    --unaccent-color: #9d9d9d44;
+
+    --btn-color-bg: #F2F3F4;
+
+    --border-color: #e1e4e8;
+
+    --corner-color-bg: #242424;
+
+    --text-color: #1A1A1A;
+    --text-color-un: #F2F3F4;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #121212;
+    --header-bg: #121212;
+    --sidebar-bg: #121212;
+    --main-bg: #121212;
+    /* --accent-color: #A6FF00; */
+    --accent-color: #c0fe04;
+    --unaccent-color: #9d9d9d44;
+
+    --btn-color-bg: #121212;
+
+    --border-color: #202020;
+
+    --corner-color-bg: #F2F3F4;
+
+    --text-color: #F2F3F4;
+    --text-color-un: #1A1A1A;
+  }
+}
 
 @font-face {
-  font-family: 'MyFont';
+  font-family: 'pt-root';
   src: url('/Fonts/pt-root-ui_medium.woff2') format('woff2');
-  /* src: url('/Fonts/pt-root-ui_medium.otf') format('truetype'); */
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'pixels';
+  src: url('/Fonts/DepartureMono-Regular.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: 'bedstead';
+  src: url('/Fonts/bedstead.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -57,14 +105,10 @@ canvas {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-family: 'MyFont', sans-serif;
 }
 
 body {
   background-color: var(--bg-color);
-  /* background-color: #0a2e38; */
-  /* background: #000000; */
   color: var(--text-color);
   display: flex;
   flex-direction: column;
@@ -83,7 +127,7 @@ body {
 @media screen and (max-width: 1200px) {
   .container {
     grid-template-columns: 0px 1fr;
-    
+
   }
 }
 
@@ -93,7 +137,7 @@ button {
 
 a {
   text-decoration: none;
-  color: var(--text-color-white);
+  color: var(--text-color);
 }
 
 li {
@@ -104,9 +148,12 @@ a,
 button,
 input,
 textarea {
-  -webkit-tap-highlight-color: transparent; /* iOS & Android */
-  -webkit-touch-callout: none;              /* Відключити long-press меню */
-  outline: none;                            /* При фокусі */
+  -webkit-tap-highlight-color: transparent;
+  /* iOS & Android */
+  -webkit-touch-callout: none;
+  /* Відключити long-press меню */
+  outline: none;
+  /* При фокусі */
 }
 
 .bg-img {
@@ -122,16 +169,16 @@ textarea {
   align-items: center;
   text-decoration: none;
   background-color: transparent;
-  color: white;
+  color: var(--btn-color-bg);
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.btn.active > p {
+.btn.active>p {
   cursor: default;
   animation: fadeInZoom 0.4s forwards;
-  
+
 }
 
 a.btn.active {
@@ -139,12 +186,12 @@ a.btn.active {
   cursor: default;
 }
 
-.btn > p {
+.btn>p {
   transition: background-color 0.2s ease, color 0.2s ease;
   font-weight: 500;
 }
 
-.btn:hover > p {
+.btn:hover>p {
   color: var(--accent-color);
 
 }
@@ -157,20 +204,40 @@ a.btn.active {
   position: absolute;
   width: 6px;
   height: 6px;
-  background-color: rgb(255, 255, 255);
-  animation: fadeInZoom 0.4s ease-out forwards;
+  background-color: var(--corner-color-bg);
+  animation: fadeInZoom 0.2s ease-out forwards;
 }
 
 /* Кути */
-.corner.tl { top: 0px; left: 0px; animation: fadeInZoom-tl 0.4s forwards;}
-.corner.tr { top: 0px; right: 0px; animation: fadeInZoom-tr 0.4s forwards;}
-.corner.bl { bottom: 0px; left: 0px; animation: fadeInZoom-bl 0.4s forwards;}
-.corner.br { bottom: 0px; right: 0px; animation: fadeInZoom-br 0.4s forwards;}
+.corner.tl {
+  top: 0px;
+  left: 0px;
+  animation: fadeInZoom-tl 0.2s forwards;
+}
+
+.corner.tr {
+  top: 0px;
+  right: 0px;
+  animation: fadeInZoom-tr 0.2s forwards;
+}
+
+.corner.bl {
+  bottom: 0px;
+  left: 0px;
+  animation: fadeInZoom-bl 0.2s forwards;
+}
+
+.corner.br {
+  bottom: 0px;
+  right: 0px;
+  animation: fadeInZoom-br 0.2s forwards;
+}
 
 @keyframes fadeInZoom {
   0% {
     transform: scale(0.95);
   }
+
   100% {
     transform: scale(1);
   }
@@ -178,41 +245,48 @@ a.btn.active {
 
 @keyframes fadeInZoom-tl {
   0% {
-    top: 3px; 
+    top: 3px;
     left: 3px;
   }
+
   100% {
-    top: 0px; 
+    top: 0px;
     left: 0px;
   }
 }
+
 @keyframes fadeInZoom-tr {
   0% {
-    top: 3px; 
+    top: 3px;
     right: 3px;
   }
+
   100% {
-    top: 0px; 
+    top: 0px;
     right: 0px;
   }
 }
+
 @keyframes fadeInZoom-bl {
   0% {
-    bottom: 3px; 
+    bottom: 3px;
     left: 3px;
   }
+
   100% {
-    bottom: 0px; 
+    bottom: 0px;
     left: 0px;
   }
 }
+
 @keyframes fadeInZoom-br {
   0% {
-    bottom: 3px; 
+    bottom: 3px;
     right: 3px;
   }
+
   100% {
-    bottom: 0px; 
+    bottom: 0px;
     right: 0px;
   }
 }

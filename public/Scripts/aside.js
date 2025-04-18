@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
     setSidebarVisible(!hidden);
   });
 
-  // Hover ефект для розгортання
   sidebar?.addEventListener("mouseover", (event) => {
     if (
       hidden &&
@@ -60,6 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
     sidebar_wrapper?.classList.toggle("hidden", !visible);
     hidden = !visible;
     localStorage.setItem("sidebarHidden", hidden ? "true" : "false");
+    // console.log(`hidden ${hidden}`);
+    
   }
 
   function checkResponsive() {
@@ -69,14 +70,20 @@ document.addEventListener("DOMContentLoaded", function () {
         isMin1200 = true;
       }
     } else {
-      if (isMin1200 === true) {
+      if (localStorage.getItem("sidebarHidden") === "true") {
+        setSidebarVisible(false);
+        isMin1200 = false;
+      }
+      else if(isMin1200 === true) {
         setSidebarVisible(true);
         isMin1200 = false;
       }
     }
-    // console.log(isMin1200);
+    // console.log(`isMin1200 ${isMin1200}`);
   }
 
   checkResponsive();
+  // console.log(`isMin1200 ${isMin1200}`);
+  
   window.addEventListener("resize", checkResponsive);
 });

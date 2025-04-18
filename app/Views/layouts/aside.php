@@ -19,9 +19,9 @@
         </div>
 
         <div class="sidebar-section">
-            <h3>Мої спільноти</h3>
+            <h3>MY-CHANNELS:array ></h3>
 
-            <button class="btn" onclick="showCreateChannel()">Створити спільноту</button>
+            <button class="btn create-channel" onclick="showCreateChannel()">>CREATE-CHANNEL()</button>
 
             <ul class="community-list">
                 <?php foreach ($communities as $community): ?>
