@@ -1,0 +1,11 @@
+.channel-header {
+    /* position: relative; */
+    /* display: flex; */
+    /* height: 64px; */
+    /* width: 100%; */
+}
+.channel-banner {
+    width: 100%;
+    height: 64px;
+    background: center/cover;
+}

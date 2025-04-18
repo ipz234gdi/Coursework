@@ -21,5 +21,5 @@ $router->get('/posts', 'PostController@index');
 //Channels
 $router->post('/channels/create', 'ChannelController@createChannels');
 $router->get('/channels', 'ChannelController@listUserCommunities');
-
+$router->get('/channels/{id}', 'ChannelController@show');
 ?>

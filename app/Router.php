@@ -14,20 +14,39 @@ class Router {
         $this->routes[$method][$uri] = $action;
     }
 
-    public function dispatch($method, $uri) {
-        $uri = parse_url($uri, PHP_URL_PATH);
-        $action = $this->routes[$method][$uri] ?? null;
+    public function dispatch($httpMethod, $requestUri) {
+        $path = parse_url($requestUri, PHP_URL_PATH);
 
-        if (!$action) {
-            http_response_code(404);
-            echo "404 Not Found";
-            return;
+        // 1) Спроба прямого збігу
+        if (isset($this->routes[$httpMethod][$path])) {
+            return $this->runAction($this->routes[$httpMethod][$path], []);
         }
 
+        // 2) Шукаємо шлях з параметрами
+        foreach ($this->routes[$httpMethod] as $routePattern => $action) {
+            // Перетворюємо /channels/{id} → #^/channels/([^/]+)$#
+            $regex = preg_replace('#\{[^/]+\}#', '([^/]+)', $routePattern);
+            $regex = '#^' . $regex . '$#';
+
+            if (preg_match($regex, $path, $matches)) {
+                array_shift($matches); // перший елемент — повний рядок
+                return $this->runAction($action, $matches);
+            }
+        }
+
+        // 3) Якщо нічого не спрацювало — 404
+        http_response_code(404);
+        echo "404 Not Found";
+    }
+
+    private function runAction(string $action, array $params) {
         list($controller, $methodName) = explode('@', $action);
+
+        // Підкорегуйте шлях до вашої папки з контролерами, якщо потрібно
         require_once __DIR__ . "/Controllers/$controller.php";
 
         $controllerObj = new $controller;
-        $controllerObj->$methodName();
+        // викликаємо метод із витягненими параметрами
+        return call_user_func_array([$controllerObj, $methodName], $params);
     }
 }

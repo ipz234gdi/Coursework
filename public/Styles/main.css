@@ -3,7 +3,7 @@
     width: 100%;
     padding: 1.5rem;
     overflow-y: auto;
-    max-width: 732px;
+    max-width: 1120px;
     margin: 0 auto;
     transition: all 0.3s ease;
     grid-area: main;

@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="/Styles/main.css">
   <link rel="stylesheet" href="/Styles/aside.css">
   <link rel="stylesheet" href="/Styles/createChannel.css">
-
+  <link rel="stylesheet" href="/Styles/channel.css">
 
   <script src="/Scripts/script.js"></script>
   <script src="/Scripts/aside.js"></script>
@@ -31,7 +31,7 @@
     <?php include __DIR__ . '/aside.php'; ?>
 
     <main class="main-content">
-      <?= $content /* весь «тултіп» сторінки */ ?>
+      <?= $content ?? '' ?>
     </main>
   </div>
 

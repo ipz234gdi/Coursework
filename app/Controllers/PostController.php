@@ -73,6 +73,7 @@ class PostController
              case 'home':
                  if ($userId === null) {
                      // якщо не залогінений — показуємо порожній список
+                     echo '<script> log.console("User not found"); </script>';
                      return [];
                  }
                  $sql = "
