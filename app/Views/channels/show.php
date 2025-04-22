@@ -3,19 +3,26 @@
 <div class="channel-header">
     <img src="<?= htmlspecialchars($channel['banner_url'] ?? '/img/default_banner.jpg') ?>" alt=""
         class="channel-banner" />
-    <div class="channel-info">
-        <img class="channel-icon" src="<?= htmlspecialchars($channel['icon_url'] ?? '/img/default_icon.png') ?>"
-            alt="<?= htmlspecialchars($channel['name']) ?>">
-        <h1>p/<?= htmlspecialchars($channel['name']) ?></h1>
-        <p class="channel-desc"><?= nl2br(htmlspecialchars($channel['description'])) ?></p>
+    <div class="channel-section">
+        <div class="channel-info">
+            <img class="channel-icon" src="<?= htmlspecialchars($channel['icon_url'] ?? '/img/default_icon.jpg') ?>"
+                alt="<?= htmlspecialchars($channel['name']) ?>">
+            <h1 class="channel-name">p/<?= htmlspecialchars($channel['name']) ?></h1>
+        </div>
         <div class="channel-controls">
-            <?php if ($isJoined): ?>
-                <button class="btn btn-joined">Joined</button>
-            <?php else: ?>
-                <form method="POST" action="/channels/<?= $channel['id'] ?>/join">
+            <?php if ($userId && !$isJoined && $channel['created_by'] != $userId): ?>
+                <!-- Join -->
+                <form method="POST" action="/channels/<?= htmlspecialchars($channel['name']) ?>/join">
                     <button class="btn btn-join">Join</button>
                 </form>
+
+            <?php elseif ($userId && $isJoined): ?>
+                <!-- Leave -->
+                <form method="POST" action="/channels/<?= htmlspecialchars($channel['name']) ?>/leave">
+                    <button class="btn btn-leave">Leave</button>
+                </form>
             <?php endif; ?>
+
             <span class="member-count"><?= $memberCount ?> members</span>
         </div>
     </div>

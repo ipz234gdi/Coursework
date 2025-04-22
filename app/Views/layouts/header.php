@@ -7,7 +7,7 @@ $username = $_SESSION['user']['username'] ?? null;
     <button id="toggleSidebarBtnMin" class="toggle-btn-min">☰</button>
     <div class="logo"><a href="/home">Pingora</a></div>
     <div class="search-bar">
-        <input type="text" placeholder="Пошук...">
+        <input type="text" placeholder="Search...">
     </div>
     <div class="header-actions">
         <a href="/posts/create" class="btn">

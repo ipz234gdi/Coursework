@@ -19,7 +19,8 @@ class Router {
 
         // 1) Спроба прямого збігу
         if (isset($this->routes[$httpMethod][$path])) {
-            return $this->runAction($this->routes[$httpMethod][$path], []);
+            [$ctr, $mtd] = explode('@', $this->routes[$httpMethod][$path]);
+            return $this->run($ctr, $mtd, []);
         }
 
         // 2) Шукаємо шлях з параметрами
@@ -30,7 +31,8 @@ class Router {
 
             if (preg_match($regex, $path, $matches)) {
                 array_shift($matches); // перший елемент — повний рядок
-                return $this->runAction($action, $matches);
+                [$ctr, $mtd] = explode('@', $action);
+                return $this->run($ctr, $mtd, $matches);
             }
         }
 
@@ -39,14 +41,9 @@ class Router {
         echo "404 Not Found";
     }
 
-    private function runAction(string $action, array $params) {
-        list($controller, $methodName) = explode('@', $action);
-
-        // Підкорегуйте шлях до вашої папки з контролерами, якщо потрібно
+    private function run($controller, $method, array $params) {
         require_once __DIR__ . "/Controllers/$controller.php";
-
-        $controllerObj = new $controller;
-        // викликаємо метод із витягненими параметрами
-        return call_user_func_array([$controllerObj, $methodName], $params);
+        $obj = new $controller;
+        call_user_func_array([$obj, $method], $params);
     }
 }

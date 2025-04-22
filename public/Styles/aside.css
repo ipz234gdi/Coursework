@@ -148,6 +148,10 @@
     background-color: var(--corner-color-bg);
 }
 
+.community-item .btn {
+    color: var(--text-color);
+}
+
 .community-icon {
     width: 20px;
     height: 20px;

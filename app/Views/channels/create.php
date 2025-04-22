@@ -5,8 +5,8 @@ $title = "Створення спільноти";
 <div class="modal-overlay" id="createCommunityModal">
     <!-- Step 1 -->
     <div class="modal">
-        <form id="communityForm">
-            <button class="close-btn" onclick="closeModal()">×</button>
+        <form id="communityForm" action="/channels/create" method="POST" enctype="multipart/form-data">
+            <button type="button" class="close-btn" onclick="closeModal()">×</button>
             <div class="modal-header">
                 <h2>Tell us about your community</h2>
 
@@ -27,12 +27,15 @@ $title = "Створення спільноти";
 
             <div class="step step-1 active">
                 <label>Community name <span style="color: red;">*</span></label>
-                <input type="text" id="communityName" maxlength="21" required
-                    oninput="updatePreview(); updateCharCount('communityName', 21)" />
+                <input type="text" id="communityName" name="name" maxlength="21" required
+                    oninput="updatePreview(); updateCharCount('communityName', 21); validateNameInput()" />
                 <small id="nameCounter" class="char-counter">21 characters left</small>
+                <p id="nameError" style="color: red; font-size: 0.9rem; display: none;">
+                    Назва може містити лише літери та цифри.
+                </p>
 
                 <label>Description <span style="color: red;">*</span></label>
-                <textarea id="communityDesc" maxlength="500" required
+                <textarea id="communityDesc" name="description" maxlength="500" required
                     oninput="updatePreview(); updateCharCount('communityDesc', 500)"></textarea>
                 <small id="descCounter" class="char-counter">500 characters left</small>
             </div>
@@ -40,35 +43,46 @@ $title = "Створення спільноти";
             <!-- Step 2 -->
             <div class="step step-2 hidden">
                 <label>Upload Icon:</label>
-                <input type="file" accept="image/*" id="iconUpload" />
+                <input type="file" name="icon" accept="image/*" id="iconUpload" />
                 <label>Upload Banner:</label>
-                <input type="file" accept="image/*" id="bannerUpload" />
+                <input type="file" name="banner" accept="image/*" id="bannerUpload" />
             </div>
 
             <!-- Step 3 -->
             <div class="step step-3 hidden">
                 <label>Hashtags:</label>
-                <input type="text" id="hashtags" placeholder="#programming #php" />
+                <input type="text" id="hashtags" name="hashtags" placeholder="#programming #php" />
             </div>
 
             <!-- Step 4 -->
             <div class="step step-4 hidden">
                 <label>Privacy:</label>
-                <select id="privacy">
+                <select id="privacy" name="privacy">
                     <option value="private">Private (invite only)</option>
                     <option value="readonly">Read-only for guests</option>
                     <option value="public">Public (anyone can join & post)</option>
                 </select>
 
                 <label>
-                    <input type="checkbox" id="nsfw" />
+                    <input type="checkbox" id="nsfw" name="is_18" />
                     18+ Content
                 </label>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="prev-btn" onclick="changeStep(-1)" disabled>Back</button>
-                <button type="button" class="next-btn" onclick="changeStep(1)">Next</button>
+                <button type="button" class="prev-btn" onclick="changeStep(-1)" disabled>
+                    Back
+                </button>
+
+                <!-- Кнопка Next: завжди type=button -->
+                <button id="nextBtn" type="button" class="next-btn" onclick="changeStep(1)">
+                    Next
+                </button>
+
+                <!-- Кнопка Submit: завжди type=submit, спочатку схована -->
+                <button id="submitBtn" type="submit" class="submit-btn" style="display:none">
+                    Create
+                </button>
             </div>
         </form>
 
@@ -95,10 +109,25 @@ $title = "Створення спільноти";
     }
 
     function closeModal() {
-        const modalform = document.querySelector('#createCommunityModal');
-        modalform.style.display = 'none';
+        const modal = document.querySelector('#createCommunityModal');
+        const form = document.getElementById('communityForm');
+
+        // form.reset();
+
+        // updateCharCount('communityName', 21);
+        // updateCharCount('communityDesc', 500);
+
+        // document.getElementById('nameError').style.display = 'none';
+
         currentStep = 1;
-        updateSteps(); // опційно: оновлення активного етапу
+
+        document.querySelector(".prev-btn").disabled = true;
+        document.getElementById('nextBtn').style.display = 'inline-block';
+        document.getElementById('submitBtn').style.display = 'none';
+
+        updateSteps();
+
+        modal.style.display = 'none';
     }
 
     function updateCharCount(fieldId, maxLength) {
@@ -117,19 +146,37 @@ $title = "Створення спільноти";
     function changeStep(direction) {
         if (direction === 1 && !validateCurrentStep()) return;
 
+        // ховаємо поточний крок, показуємо наступний
         document.querySelector(`.step-${currentStep}`)?.classList.remove('active');
         currentStep += direction;
         document.querySelector(`.step-${currentStep}`)?.classList.add('active');
 
-        // Кнопки
+        // оновлюємо кнопки
         document.querySelector(".prev-btn").disabled = currentStep === 1;
-        document.querySelector(".next-btn").textContent =
-            currentStep === 4 ? "Submit" : "Next";
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
 
         if (currentStep === 4) {
-            document.querySelector(".next-btn").onclick = submitForm;
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'inline-block';
         } else {
-            document.querySelector(".next-btn").onclick = () => changeStep(1);
+            nextBtn.style.display = 'inline-block';
+            submitBtn.style.display = 'none';
+        }
+    }
+
+    function validateNameInput() {
+        if (currentStep === 1) {
+            const input = document.getElementById("communityName");
+            const error = document.getElementById("nameError");
+            // Дозволяємо тільки A–Z, a–z, 0–9 (порожній рядок теж ок)
+            const isValid = /^[A-Za-z0-9_]*$/.test(input.value);
+            if (isValid) {
+                error.style.display = 'none';
+            } else {
+                error.style.display = 'block';
+            }
+            return isValid;
         }
     }
 
@@ -138,39 +185,25 @@ $title = "Створення спільноти";
             const name = document.getElementById("communityName").value.trim();
             const desc = document.getElementById("communityDesc").value.trim();
 
-            if (!name || !desc) {
-                alert("Будь ласка, заповніть назву та опис спільноти.");
+            if (!validateNameInput()) {
                 return false;
+
+                if (!name || !desc) {
+                    alert("Будь ласка, заповніть назву та опис спільноти.");
+                    return false;
+                }
             }
+
+            // if (currentStep === 2) {
+            //     const icon = document.getElementById("iconUpload").files[0];
+            //     const banner = document.getElementById("bannerUpload").files[0];
+
+            //     if (!icon || !banner) {
+            //         alert("Будь ласка, завантажте іконку та банер.");
+            //         return false;
+            //     }
+            // }
         }
-
-        // if (currentStep === 2) {
-        //     const icon = document.getElementById("iconUpload").files[0];
-        //     const banner = document.getElementById("bannerUpload").files[0];
-
-        //     if (!icon || !banner) {
-        //         alert("Будь ласка, завантажте іконку та банер.");
-        //         return false;
-        //     }
-        // }
-
         return true;
-    }
-
-    function submitForm() {
-        const formData = new FormData();
-
-        formData.append("name", document.getElementById("communityName").value);
-        formData.append("description", document.getElementById("communityDesc").value);
-        formData.append("icon", document.getElementById("iconUpload").files[0]);
-        formData.append("banner", document.getElementById("bannerUpload").files[0]);
-        formData.append("hashtags", document.getElementById("hashtags").value);
-        formData.append("privacy", document.getElementById("privacy").value);
-        formData.append("nsfw", document.getElementById("nsfw").checked ? 1 : 0);
-
-        // TODO: fetch('/api/channels/create', { method: 'POST', body: formData });
-
-        console.log("Submitting...", Object.fromEntries(formData.entries()));
-        closeModal();
     }
 </script>

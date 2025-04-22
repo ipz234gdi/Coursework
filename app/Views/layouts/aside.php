@@ -34,7 +34,7 @@
             <ul class="community-list">
                 <?php foreach ($communities as $community): ?>
                     <li class="community-item<?= ($community['id'] == $activeCommunityId ? ' active' : '') ?>">
-                        <a href="/channels/<?= $community['id'] ?>" class="btn">
+                        <a href="/channels/<?= $community['name'] ?>" class="btn">
                             <div class="community-icon"><?= htmlspecialchars(mb_substr($community['name'], 0, 1)) ?></div>
                             <span><?= htmlspecialchars($community['name']) ?></span>
                         </a>

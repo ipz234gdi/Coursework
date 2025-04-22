@@ -114,7 +114,7 @@
     margin-top: 1rem;
   }
   
-  .prev-btn, .next-btn {
+  .prev-btn, .next-btn, .submit-btn{
     padding: 0.5rem 1.5rem;
     border-radius: 20px;
     font-weight: bold;
@@ -129,6 +129,11 @@
   }
   
   .next-btn {
+    background: #0079d3;
+    color: white;
+  }
+
+  .submit-btn {
     background: #0079d3;
     color: white;
   }

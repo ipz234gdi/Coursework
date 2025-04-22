@@ -1,6 +1,8 @@
 <?php
 
 require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../Controllers/ChannelController.php';
+require_once __DIR__ . '/../helpers.php';
 
 class AuthController
 {
@@ -14,10 +16,25 @@ class AuthController
 
     public function showLogin()
     {
-        ob_start();
-        require __DIR__ . '/../Views/auth/login.php';
-        $Login = ob_get_clean();
-        require __DIR__ . '/../Views/main.php';
+        // ob_start();
+        // require __DIR__ . '/../Views/auth/login.php';
+        // $Login = ob_get_clean();
+        // require __DIR__ . '/../Views/main.php';
+
+        $filter = $_GET['filter'] ?? 'home';
+
+        // 2) Дістаємо спільноти для aside
+        $communities = (new ChannelController())->listUserCommunities();
+
+        $content = view('auth/login', []);
+
+        echo view('layouts/layout', [
+            'title' => 'Логін — Pingora',
+            'communities' => $communities,
+            'activeCommunityId' => $_GET['active'] ?? null,
+            'filter' => $filter,
+            'content' => $content,
+        ]);
     }
 
     public function register()
